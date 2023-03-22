@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Signin = () => {
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = Cookies.get("token");
+        console.log("Token", token);
+
+        if (token) {
+            navigate("/todo");
+        }
+    }, []);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -24,7 +34,13 @@ const Signin = () => {
             // If the response indicates a successful login or registration
             if (response.data.success) {
                 // Redirect the user to the dashboard page
-                navigate("/dashboard");
+                const expirationTime = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from last accessed
+            
+                Cookies.set("token", response.data.token, {
+                    expires: expirationTime,
+                    sameSite: "Lax"
+                });
+                navigate("/todo");
             }
         } catch (error) {
             console.error(error);

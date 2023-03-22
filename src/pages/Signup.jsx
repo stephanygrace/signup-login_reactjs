@@ -6,6 +6,7 @@ const Signup = () => {
     let [name, setName] = useState("");
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
+    let [confirmpassword, setConfirmPassword] = useState("");
   
 
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Signup = () => {
             let data;
 
             url = "http://localhost/Stelle/php-auth-api/register.php";
-            data = { name, email, password };
+            data = { name, email, password, confirmpassword };
 
             const response = await axios.post(url, data);
             console.log(response.data);
@@ -76,6 +77,16 @@ const Signup = () => {
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group mt-3">
+                        <label>Confirm Password</label>
+                        <input
+                            type="password"
+                            className="form-control mt-1"
+                            placeholder="Password"
+                            value={confirmpassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                         />
                     </div>
                     <div className="d-grid gap-2 mt-3">
