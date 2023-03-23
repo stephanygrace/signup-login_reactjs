@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import Todo from "./pages/Todo";
+import CreateTask from "./pages/Todo/CreateTask";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import Error from "./pages/Error";
+import TodoLists from "./pages/Todo/TodoLists";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
@@ -21,26 +23,23 @@ function App() {
 
     return (
         <Router>
-          <Routes>
-            {!isAuthenticated ? (
-              <>
-                <Route exact path="/" element={<Signin />} />
-                <Route path="/signup" element={<Signup />} />
-              </>
-            ) : (
-              <>
-                <Route path="/todo" element={<Todo />} />
-              </>
-            )}
-            <Route path="*" element={<UnauthorizedAccess />} />
-          </Routes>
+            <Routes>
+                {!isAuthenticated ? (
+                    <>
+                        <Route exact path="/" element={<Signin />} />
+                        <Route path="/signup" element={<Signup />} />
+                    </>
+                ) : (
+                    <>
+                        <Route path="/CreateTask" element={<CreateTask />} />
+                        <Route path="/TodoLists" element={<TodoLists />} />
+                    </>
+                )}
+                <Route path="*" element={<Error />} />
+            </Routes>
         </Router>
-      );
-                
-      function UnauthorizedAccess() {
-        return <h1>Unauthorized access</h1>;
-      }
-      
+    );
+
 }
 
 export default App;

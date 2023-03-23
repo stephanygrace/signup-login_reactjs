@@ -1,46 +1,74 @@
-
 .App {
-  background-color: white;
+    background-color: white;
 }
 
 .Auth-form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 
 .Auth-form {
-  width: 420px;
-  box-shadow: rgb(0 0 0 / 16%) 5px 5px 20px;
-  padding-top: 30px;
-  padding-bottom: 20px;
-  border-radius: 20px;
-  background-color: white;
+    width: 420px;
+    box-shadow: rgb(0 0 0 / 16%) 5px 5px 20px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 20px;
+    background-color: white;
 }
 
 .Auth-form-content {
-  padding-left: 12%;
-  padding-right: 12%;
+    padding-left: 12%;
+    padding-right: 12%;
 }
 
 .Auth-form-title {
-  text-align: center;
-  margin-bottom: 1em;
-  font-size: 28px;
-  color: rgb(34, 34, 34);
-  font-weight: 800;
-
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 28px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
 }
 
 label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #3d3d3d;
+    font-size: 14px;
+    font-weight: 600;
+    color: #3d3d3d;
 }
 
 .link-primary {
-  cursor: pointer;
-  
+    cursor: pointer;
+}
+
+.date {
+    cursor: pointer;
+}
+
+/* define styles for the table */
+.my-table {
+    border-collapse: collapse; /* merge the borders of the cells */
+    width: 100%; /* set the width to 100% */
+}
+
+/* define styles for the header row */
+.my-table th {
+    background-color: #333; /* set the background color to dark gray */
+    color: #fff; /* set the text color to white */
+    font-weight: bold; /* make the text bold */
+    padding: 10px; /* add some padding */
+    text-align: left; /* align the text to the left */
+}
+
+/* define styles for the body rows */
+.my-table td {
+    border: 1px solid #ccc; /* add a border */
+    padding: 10px; /* add some padding */
+    text-align: left; /* align the text to the left */
+}
+
+/* define styles for even rows */
+.my-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* set the background color to light gray */
 }

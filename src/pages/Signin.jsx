@@ -16,7 +16,7 @@ const Signin = () => {
         if (token) {
             navigate("/todo");
         }
-    }, []);
+    }, );
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -35,12 +35,12 @@ const Signin = () => {
             if (response.data.success) {
                 // Redirect the user to the dashboard page
                 const expirationTime = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from last accessed
-            
+
                 Cookies.set("token", response.data.token, {
                     expires: expirationTime,
-                    sameSite: "Lax"
+                    sameSite: "Lax",
                 });
-                navigate("/todo");
+                navigate("/TodoLists");
             }
         } catch (error) {
             console.error(error);
