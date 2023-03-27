@@ -3,20 +3,21 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const Signin = () => {
+const Signin = ({setToken}) => {
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
 
+  
+
+    const [isLoggedIn, setisLoggedIn] = useState(false);
+
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = Cookies.get("token");
-        console.log("Token", token);
+    // useEffect(() => {
+        // const token = Cookies.get("token");
+        // console.log("Token", token);
 
-        if (token) {
-            navigate("/todo");
-        }
-    }, );
+    // },[navigate, isLoggedIn]);
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -40,7 +41,8 @@ const Signin = () => {
                     expires: expirationTime,
                     sameSite: "Lax",
                 });
-                navigate("/TodoLists");
+                setToken(Cookies.get("token"));
+           
             }
         } catch (error) {
             console.error(error);
