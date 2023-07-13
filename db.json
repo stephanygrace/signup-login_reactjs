@@ -9,7 +9,49 @@
       "phone": "",
       "country": "",
       "address": "",
+      "role": "admin",
       "gender": "male"
+    },
+    {
+      "id": "user",
+      "name": "user@mail.com",
+      "pass": "user",
+      "email": "user@mail.com",
+      "phone": "",
+      "country": "",
+      "address": "",
+      "role": "user",
+      "gender": "female"
+    }
+  ],
+  "roleaccess":[
+    {
+      "role": "admin",
+      "menu": "customer",
+      "haveadd": true,
+      "haveedit": true,
+      "havedelete": true
+    },
+    {
+      "role": "admin",
+      "menu": "supplier",
+      "haveadd": true,
+      "haveedit": true,
+      "havedelete": true
+    },
+    {
+      "role": "user",
+      "menu": "customer",
+      "haveadd": true,
+      "haveedit": true,
+      "havedelete": false
+    },
+    {
+      "role": "user1",
+      "menu": "customer",
+      "haveadd": false,
+      "haveedit": false,
+      "havedelete": false
     }
   ]
 }
