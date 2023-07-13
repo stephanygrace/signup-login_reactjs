@@ -56,7 +56,7 @@ const Register = () => {
       })
         .then((res) => {
           toast.success("Registered Successfully");
-          navigate("/");
+          navigate("/login");
         })
         .catch((err) => {
           toast.error(`Failed: ${err.message}`);
@@ -66,11 +66,11 @@ const Register = () => {
 
   return (
     <div>
-      <div className="offset-lg-3 col-lg-6">
+      <div className="offset-lg-3 col-lg-6" style={{ paddingTop: 100 }}>
         <form className="container" onSubmit={handleSubmit}>
           <div className="card">
             <div className="card-header">
-              <h1>Welcome to the Xoo</h1>
+              <h1>Register</h1>
             </div>
             <div className="card-body">
               <div className="row">
