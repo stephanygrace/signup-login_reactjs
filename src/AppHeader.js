@@ -1,42 +1,40 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const AppHeader = () => {
-  const [displayusername, displayusernameupdate] = useState(null);
-  const [showmenu, showmenuupdate] = useState(false);
-
+  const [displayUsername, setDisplayUsername] = useState("");
+  const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
   useEffect(() => {
     if (location.pathname === "/login" || location.pathname === "/register") {
-      showmenuupdate(false);
+      setShowMenu(false);
     } else {
-      showmenuupdate(true);
-
+      setShowMenu(true);
       let username = sessionStorage.getItem("username");
-      if (username === "" || username === null) {
+      if (!username) {
         navigate("/login");
       } else {
-        displayusernameupdate(username);
+        setDisplayUsername(username);
       }
     }
-  }, [location, navigate]);
+  }, [location.pathname, navigate]);
 
   return (
     <div>
-      {showmenu && (
+      {showMenu && (
         <div className="header">
-          <span style={{ marginLeft: "2%" }}>
-            Welcome: <b>{displayusername}</b>
+          <span style={{ marginLeft: "5%", color: "white" }}>
+            Welcome: <b>{displayUsername}</b>
           </span>
-          <Link to={"/"} style={{ color: "white", marginLeft: "5%" }}>
+          <Link to={"/"} style={{ marginLeft: "5%", color: "white" }}>
             Home
           </Link>
-          <Link to={"/customer"} style={{ color: "white", marginLeft: "5%" }}>
+          <Link to={"/customer"} style={{ marginLeft: "5%", color: "white" }}>
             Customer
           </Link>
-
-          <Link to={"/login"} style={{ color: "white", float: "right" }}>
+          <Link style={{ float: "right", color: "white" }} to={"/login"}>
             Logout
           </Link>
         </div>

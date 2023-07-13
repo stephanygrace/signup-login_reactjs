@@ -1,76 +1,82 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register = () => {
-  const [id, idchange] = useState("");
-  const [name, namechange] = useState("");
-  const [pass, passchange] = useState("");
-  const [email, emailchange] = useState("");
-  const [phone, phonechange] = useState("");
-  const [country, countrychange] = useState("");
-  const [address, addresschange] = useState("");
-  const [gender, genderchange] = useState("male");
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState("india");
+  const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("female");
 
   const navigate = useNavigate();
 
-  const isValidate = () => {
-    let isproceed = true;
-    let errormessage = "Please enter the value in ";
-    if (id === null || id === "") {
-      isproceed = false;
-      errormessage += "Username ";
+  const isValid = () => {
+    let isValid = true;
+    let errorMessage = "Please enter a value in ";
+    if (!id) {
+      isValid = false;
+      errorMessage += "Username";
     }
-    if (name === null || name === "") {
-      isproceed = false;
-      errormessage += "Fullname ";
+    if (!name) {
+      isValid = false;
+      errorMessage += "Full Name";
     }
-    if (pass === null || pass === "") {
-      isproceed = false;
-      errormessage += "Password ";
+    if (!password) {
+      isValid = false;
+      errorMessage += "Password";
     }
-    if (email === null || email === "") {
-      isproceed = false;
-      errormessage += "Email ";
+    if (!email) {
+      isValid = false;
+      errorMessage += "Email";
     }
-    if (!isproceed) {
-      toast.warning(errormessage);
-    } else {
-      if (/^\S+@\S+\.\S+$/.test(email)) {
-      } else {
-        isproceed = false;
-        toast.warning("Please enter a valid email");
-      }
+    if (!isValid) {
+      toast.warning(errorMessage);
+    } else if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+      isValid = false;
+      toast.warning("Please enter a valid email");
     }
-    return isproceed;
+    return isValid;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let regobj = { id, name, pass, email, phone, country, address, gender };
-    if (isValidate()) {
+    const regObj = {
+      id,
+      name,
+      password,
+      email,
+      phone,
+      country,
+      address,
+      gender,
+    };
+    if (isValid()) {
       fetch("http://localhost:8000/user", {
         method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(regobj),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(regObj),
       })
         .then((res) => {
-          toast.success("Registered Successfully");
+          toast.success("Registered successfully.");
           navigate("/login");
         })
         .catch((err) => {
-          toast.error(`Failed: ${err.message}`);
+          toast.error("Failed: " + err.message);
         });
     }
   };
 
   return (
     <div>
-      <div className="offset-lg-3 col-lg-6" style={{ paddingTop: 100 }}>
+      <div className="offset-lg-3 col-lg-6">
         <form className="container" onSubmit={handleSubmit}>
           <div className="card">
             <div className="card-header">
-              <h1>Register</h1>
+              <h1>User Registration</h1>
             </div>
             <div className="card-body">
               <div className="row">
@@ -80,11 +86,10 @@ const Register = () => {
                       User Name <span className="errmsg">*</span>
                     </label>
                     <input
-                      type="text"
-                      className="form-control"
                       value={id}
-                      onChange={(e) => idchange(e.target.value)}
-                    ></input>
+                      onChange={(e) => setId(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6">
@@ -93,11 +98,11 @@ const Register = () => {
                       Password <span className="errmsg">*</span>
                     </label>
                     <input
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       type="password"
                       className="form-control"
-                      value={pass}
-                      onChange={(e) => passchange(e.target.value)}
-                    ></input>
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6">
@@ -106,11 +111,10 @@ const Register = () => {
                       Full Name <span className="errmsg">*</span>
                     </label>
                     <input
-                      type="text"
-                      className="form-control"
                       value={name}
-                      onChange={(e) => namechange(e.target.value)}
-                    ></input>
+                      onChange={(e) => setName(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6">
@@ -119,30 +123,31 @@ const Register = () => {
                       Email <span className="errmsg">*</span>
                     </label>
                     <input
-                      type="email"
-                      className="form-control"
                       value={email}
-                      onChange={(e) => emailchange(e.target.value)}
-                    ></input>
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="form-group">
                     <label>Phone</label>
                     <input
-                      className="form-control"
                       value={phone}
-                      onChange={(e) => phonechange(e.target.value)}
-                    ></input>
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="form-group">
-                    <label>Country</label>
+                    <label>
+                      Country <span className="errmsg">*</span>
+                    </label>
                     <select
-                      className="form-control"
                       value={country}
-                      onChange={(e) => countrychange()}
+                      onChange={(e) => setCountry(e.target.value)}
+                      className="form-control"
                     >
                       <option value="india">India</option>
                       <option value="usa">USA</option>
@@ -154,40 +159,34 @@ const Register = () => {
                   <div className="form-group">
                     <label>Address</label>
                     <textarea
-                      name=""
-                      id=""
-                      className="form-control"
                       value={address}
-                      onChange={(e) => addresschange(e.target.value)}
-                    ></textarea>
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6">
                   <div className="form-group">
                     <label>Gender</label>
-                    <br /> <br />
+                    <br />
                     <input
-                      name="gender"
                       type="radio"
+                      checked={gender === "male"}
+                      onChange={() => setGender("male")}
+                      name="gender"
                       value="male"
                       className="app-check"
-                      checked={gender === "male"}
-                      onChange={(e) => {
-                        genderchange(e.target.value);
-                      }}
-                    ></input>
-                    <label> Male </label>
+                    />
+                    <label>Male</label>
                     <input
-                      name="gender"
                       type="radio"
+                      checked={gender === "female"}
+                      onChange={() => setGender("female")}
+                      name="gender"
                       value="female"
                       className="app-check"
-                      checked={gender === "female"}
-                      onChange={(e) => {
-                        genderchange(e.target.value);
-                      }}
-                    ></input>
-                    <label> Female </label>
+                    />
+                    <label>Female</label>
                   </div>
                 </div>
               </div>
@@ -196,10 +195,10 @@ const Register = () => {
               <button type="submit" className="btn btn-primary">
                 Register
               </button>{" "}
-              |{" "}
-              <a href="http://localhost:3000" className="btn btn-danger">
-                Back
-              </a>
+              |
+              <Link to="/login" className="btn btn-danger">
+                Close
+              </Link>
             </div>
           </div>
         </form>
