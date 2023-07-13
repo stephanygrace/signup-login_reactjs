@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [id, idchange] = useState("");
@@ -8,12 +10,58 @@ const Register = () => {
   const [phone, phonechange] = useState("");
   const [country, countrychange] = useState("");
   const [address, addresschange] = useState("");
-  const [gender, genderchange] = useState("");
+  const [gender, genderchange] = useState("male");
+
+  const navigate = useNavigate();
+
+  const isValidate = () => {
+    let isproceed = true;
+    let errormessage = "Please enter the value in ";
+    if (id === null || id === "") {
+      isproceed = false;
+      errormessage += "Username ";
+    }
+    if (name === null || name === "") {
+      isproceed = false;
+      errormessage += "Fullname ";
+    }
+    if (pass === null || pass === "") {
+      isproceed = false;
+      errormessage += "Password ";
+    }
+    if (email === null || email === "") {
+      isproceed = false;
+      errormessage += "Email ";
+    }
+    if (!isproceed) {
+      toast.warning(errormessage);
+    } else {
+      if (/^\S+@\S+\.\S+$/.test(email)) {
+      } else {
+        isproceed = false;
+        toast.warning("Please enter a valid email");
+      }
+    }
+    return isproceed;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let regobj = { id, name, pass, email, phone, country, address, gender };
-    console.log("🚀 ~ file: Register.js:17 ~ handleSubmit ~ regobj:", regobj);
+    if (isValidate()) {
+      fetch("http://localhost:8000/user", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(regobj),
+      })
+        .then((res) => {
+          toast.success("Registered Successfully");
+          navigate("/");
+        })
+        .catch((err) => {
+          toast.error(`Failed: ${err.message}`);
+        });
+    }
   };
 
   return (
@@ -80,9 +128,7 @@ const Register = () => {
                 </div>
                 <div className="col-lg-6">
                   <div className="form-group">
-                    <label>
-                      Phone <span className="errmsg">*</span>
-                    </label>
+                    <label>Phone</label>
                     <input
                       className="form-control"
                       value={phone}
@@ -92,9 +138,7 @@ const Register = () => {
                 </div>
                 <div className="col-lg-6">
                   <div className="form-group">
-                    <label>
-                      Country <span className="errmsg">*</span>
-                    </label>
+                    <label>Country</label>
                     <select
                       className="form-control"
                       value={country}
@@ -152,7 +196,10 @@ const Register = () => {
               <button type="submit" className="btn btn-primary">
                 Register
               </button>{" "}
-              | <a className="btn btn-danger">Back</a>
+              |{" "}
+              <a href="http://localhost:3000" className="btn btn-danger">
+                Back
+              </a>
             </div>
           </div>
         </form>

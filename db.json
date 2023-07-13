@@ -1,6 +1,53 @@
 {
   "user": [
+    {},
     {
-}
+      "id": "dsdasd",
+      "name": "",
+      "pass": "",
+      "email": "",
+      "phone": "",
+      "country": "",
+      "address": "",
+      "gender": "male"
+    },
+    {
+      "id": "asdasdas",
+      "name": "adsa@fasdasd",
+      "pass": "asdasdas",
+      "email": "asdasd@afasfas",
+      "phone": "asdasd",
+      "address": "asdasd",
+      "gender": "female"
+    },
+    {
+      "id": "asdasdasasdasd",
+      "name": "adsa@fasdasd",
+      "pass": "asdasdas",
+      "email": "asdasd@afasfas",
+      "phone": "asdasd",
+      "address": "asdasd",
+      "gender": "female"
+    },
+    {
+      "id": "dave",
+      "name": "david",
+      "pass": "asdasdas",
+      "email": "asdfafs@gmaildsa",
+      "phone": "09765",
+      "country": "",
+      "address": "Talisay",
+      "gender": "male"
+    },
+    {
+      "id": "dasd",
+      "name": "asd",
+      "pass": "dsa",
+      "email": "dasdasd@ad.com",
+      "phone": "",
+      "country": "",
+      "address": "",
+      "gender": "male"
+    }
   ]
 }
