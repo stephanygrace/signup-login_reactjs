@@ -13,13 +13,13 @@ const Customer = () => {
   // Hooks
   const navigate = useNavigate();
 
-  // Load customer data and check user access on component mount
+  // Load customer data and user access on component mount
   useEffect(() => {
     getUserAccess();
     loadCustomer();
   }, []);
 
-  // Fetch customer data from the server
+  // Load customer data from the server
   const loadCustomer = () => {
     fetch("http://localhost:8000/customer")
       .then((res) => {
@@ -33,11 +33,12 @@ const Customer = () => {
       });
   };
 
-  // Get user access permissions for the customer page
+  // Get user access based on role
   const getUserAccess = () => {
-    const userRole = sessionStorage.getItem("userrole");
-    const roleParam = userRole ? "&role=" + userRole.toString() : "";
-    fetch("http://localhost:8000/roleaccess?menu=customer" + roleParam)
+    const userRole = sessionStorage.getItem("userrole") || "";
+    fetch(
+      "http://localhost:8000/roleaccess?role=" + userRole + "&menu=customer"
+    )
       .then((res) => {
         if (!res.ok) {
           navigate("/");
@@ -61,17 +62,31 @@ const Customer = () => {
       });
   };
 
-  // Event handlers for adding, editing, and removing customers
+  // Handle add button click
   const handleAdd = () => {
-    toast.success("added");
+    if (haveAdd) {
+      toast.success("added");
+    } else {
+      toast.warning("You don't have access to add");
+    }
   };
 
+  // Handle edit button click
   const handleEdit = () => {
-    toast.success("edited");
+    if (haveEdit) {
+      toast.success("edited");
+    } else {
+      toast.warning("You don't have access to edit");
+    }
   };
 
+  // Handle remove button click
   const handleRemove = () => {
-    toast.success("removed");
+    if (haveRemove) {
+      toast.success("removed");
+    } else {
+      toast.warning("You don't have access to remove");
+    }
   };
 
   return (
@@ -81,22 +96,19 @@ const Customer = () => {
           <h3>Customer Listing</h3>
         </div>
         <div className="card-body">
-          {haveAdd && (
-            <button onClick={handleAdd} className="btn btn-success">
-              Add (+)
-            </button>
-          )}
-          <br />
+          <button onClick={handleAdd} className="btn btn-success">
+            Add (+)
+          </button>
+          <br></br>
           <table className="table table-bordered">
             <thead className="bg-dark text-white">
               <tr>
                 <th>Code</th>
                 <th>Name</th>
                 <th>Email</th>
-                {haveEdit && haveRemove && <th>Action</th>}
+                <th>Action</th>
               </tr>
             </thead>
-
             <tbody>
               {custList &&
                 custList.map((item) => (
@@ -104,22 +116,15 @@ const Customer = () => {
                     <td>{item.code}</td>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
-                    {haveEdit && haveRemove && (
-                      <td>
-                        <button
-                          onClick={handleEdit}
-                          className="btn btn-primary"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={handleRemove}
-                          className="btn btn-danger"
-                        >
-                          Remove
-                        </button>
-                      </td>
-                    )}
+                    <td>
+                      <button onClick={handleEdit} className="btn btn-primary">
+                        Edit
+                      </button>{" "}
+                      |
+                      <button onClick={handleRemove} className="btn btn-danger">
+                        Remove
+                      </button>
+                    </td>
                   </tr>
                 ))}
             </tbody>
