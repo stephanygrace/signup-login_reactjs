@@ -3,15 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = () => {
+  // State variables
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // Hooks
   const navigate = useNavigate();
 
+  // Clear session storage on component mount
   useEffect(() => {
     sessionStorage.clear();
   }, []);
 
+  // Handle login form submission
   const proceedLogin = (e) => {
     e.preventDefault();
     if (validate()) {
@@ -37,6 +41,7 @@ const Login = () => {
     }
   };
 
+  // Validate login form inputs
   const validate = () => {
     if (username === "" || username === null) {
       toast.warning("Please enter a username");

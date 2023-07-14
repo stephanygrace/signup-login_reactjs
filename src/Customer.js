@@ -3,14 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Customer = () => {
+  // State variables
   const [custList, setCustList] = useState([]);
   const [haveEdit, setHaveEdit] = useState(false);
   const [viewChange] = useState(false);
   const [haveAdd, setHaveAdd] = useState(false);
   const [haveRemove, setHaveRemove] = useState(false);
 
+  // Hooks
   const navigate = useNavigate();
 
+  // Load customer data and check user access on component mount
+  useEffect(() => {
+    getUserAccess();
+    loadCustomer();
+  }, []);
+
+  // Fetch customer data from the server
   const loadCustomer = () => {
     fetch("http://localhost:8000/customer")
       .then((res) => {
@@ -24,11 +33,7 @@ const Customer = () => {
       });
   };
 
-  useEffect(() => {
-    getUserAccess();
-    loadCustomer();
-  }, []);
-
+  // Get user access permissions for the customer page
   const getUserAccess = () => {
     const userRole = sessionStorage.getItem("userrole");
     const roleParam = userRole ? "&role=" + userRole.toString() : "";
@@ -56,28 +61,17 @@ const Customer = () => {
       });
   };
 
+  // Event handlers for adding, editing, and removing customers
   const handleAdd = () => {
-    if (haveAdd) {
-      toast.success("added");
-    } else {
-      toast.warning("You do not have access to add");
-    }
+    toast.success("added");
   };
 
   const handleEdit = () => {
-    if (haveEdit) {
-      toast.success("edited");
-    } else {
-      toast.warning("You do not have access to edit");
-    }
+    toast.success("edited");
   };
 
   const handleRemove = () => {
-    if (haveRemove) {
-      toast.success("removed");
-    } else {
-      toast.warning("You do not have access to remove");
-    }
+    toast.success("removed");
   };
 
   return (
@@ -99,9 +93,10 @@ const Customer = () => {
                 <th>Code</th>
                 <th>Name</th>
                 <th>Email</th>
-                {haveEdit && <th>Action</th>}
+                {haveEdit && haveRemove && <th>Action</th>}
               </tr>
             </thead>
+
             <tbody>
               {custList &&
                 custList.map((item) => (
@@ -109,22 +104,20 @@ const Customer = () => {
                     <td>{item.code}</td>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
-                    {haveEdit && (
+                    {haveEdit && haveRemove && (
                       <td>
                         <button
                           onClick={handleEdit}
                           className="btn btn-primary"
                         >
                           Edit
-                        </button>{" "}
-                        {haveRemove && (
-                          <button
-                            onClick={handleRemove}
-                            className="btn btn-danger"
-                          >
-                            Remove
-                          </button>
-                        )}
+                        </button>
+                        <button
+                          onClick={handleRemove}
+                          className="btn btn-danger"
+                        >
+                          Remove
+                        </button>
                       </td>
                     )}
                   </tr>

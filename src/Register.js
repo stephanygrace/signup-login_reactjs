@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register = () => {
+  // State variables
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -12,8 +13,10 @@ const Register = () => {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("female");
 
+  // Hooks
   const navigate = useNavigate();
 
+  // Check if the registration inputs are valid
   const isValid = () => {
     let isValid = true;
     let errorMessage = "Please enter a value in ";
@@ -42,6 +45,7 @@ const Register = () => {
     return isValid;
   };
 
+  // Handle registration form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const regObj = {

@@ -10,14 +10,22 @@ import Register from "./Register";
 function App() {
   return (
     <div className="App">
+      {/* Toast container for notifications */}
       <ToastContainer theme="colored" position="top-center" />
+
+      {/* Routing using BrowserRouter */}
       <BrowserRouter>
+        {/* App header */}
         <AppHeader />
+
+        {/* Routes for different URLs */}
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/customer" element={<Customer />} />
+          <Route path="/" element={<Home />} /> {/* Home component */}
+          <Route path="/login" element={<Login />} /> {/* Login component */}
+          <Route path="/register" element={<Register />} />{" "}
+          {/* Register component */}
+          <Route path="/customer" element={<Customer />} />{" "}
+          {/* Customer component */}
         </Routes>
       </BrowserRouter>
     </div>

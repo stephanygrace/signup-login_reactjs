@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const AppHeader = () => {
+  // State variables
   const [displayUsername, setDisplayUsername] = useState("");
   const [showMenu, setShowMenu] = useState(false);
+
+  // Hooks
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Check the location path and update the display accordingly
   useEffect(() => {
     if (location.pathname === "/login" || location.pathname === "/register") {
       setShowMenu(false);
@@ -23,6 +27,7 @@ const AppHeader = () => {
 
   return (
     <div>
+      {/* Render the header menu if showMenu is true */}
       {showMenu && (
         <div className="header">
           <span style={{ marginLeft: "5%", color: "white" }}>
